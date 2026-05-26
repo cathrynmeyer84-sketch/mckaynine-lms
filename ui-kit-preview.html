@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>McKaynine UI Kit</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ============================================================
+       McKAYNINE UI KIT
+       Scraped from mckaynine.co.za — May 2026
+    ============================================================ */
+
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ============================================================
+       1. DESIGN TOKENS
+    ============================================================ */
+    :root {
+      /* --- Color Palette --- */
+      --color-primary:        #3569BF;
+      --color-primary-dark:   #2A50A0;
+      --color-accent:         #B8914F;
+      --color-accent-dark:    #9E7A3D;
+
+      --color-nav-bg:         #7A7E8A;
+      --color-nav-active:     #3569BF;
+      --color-nav-hover:      #666666;
+      --color-nav-text:       #FFFFFF;
+
+      --color-header-bar:     #1A1D2E;
+      --color-page-bg:        #D4D6DF;
+      --color-content-bg:     #FFFFFF;
+      --color-footer-bg:      #FFFFFF;
+
+      --color-text-body:      #444444;
+      --color-text-muted:     #666666;
+      --color-text-dark:      #222222;
+      --color-text-white:     #FFFFFF;
+
+      --color-border:         #CCCCCC;
+      --color-shadow:         rgba(0,0,0,0.25);
+
+      --color-youtube:        #CC0000;
+      --color-facebook:       #3B5998;
+      --color-instagram:      #C13584;
+      --color-pinterest:      #E60023;
+
+      /* --- Typography --- */
+      --font-heading:         'Trebuchet MS', Tahoma, sans-serif;
+      --font-body:            Arial, sans-serif;
+      --font-condensed:       'Open Sans Condensed', Verdana, Geneva, sans-serif;
+      --font-size-xs:         11px;
+      --font-size-sm:         13px;
+      --font-size-base:       14px;
+      --font-size-md:         20px;
+      --font-size-lg:         22px;
+      --font-size-xl:         24px;
+      --font-size-2xl:        32px;
+      --font-size-3xl:        36px;
+
+      /* --- Spacing --- */
+      --space-xs:    4px;
+      --space-sm:    8px;
+      --space-md:    16px;
+      --space-lg:    24px;
+      --space-xl:    40px;
+
+      /* --- Border radius --- */
+      --radius-sm:   6px;
+      --radius-md:   12px;
+      --radius-lg:   18px;
+      --radius-pill: 50px;
+
+      /* --- Shadows --- */
+      --shadow-card:    5px 5px 6px rgba(0,0,0,0.25);
+      --shadow-heading: 2px 1px 4px rgba(0,0,0,0.15);
+    }
+
+    /* ============================================================
+       2. BASE STYLES
+    ============================================================ */
+    body {
+      font-family: var(--font-body);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-body);
+      background-color: var(--color-page-bg);
+      line-height: 1.6;
+    }
+
+    .kit-page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: var(--space-xl) var(--space-lg);
+    }
+
+    .kit-section {
+      background: var(--color-content-bg);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-card);
+      padding: var(--space-xl);
+      margin-bottom: var(--space-xl);
+    }
+    .kit-section-title {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-lg);
+      font-weight: bold;
+      color: var(--color-primary);
+      border-bottom: 2px solid var(--color-primary);
+      padding-bottom: var(--space-sm);
+      margin-bottom: var(--space-lg);
+      letter-spacing: 0.02em;
+    }
+    .kit-label {
+      font-size: 11px;
+      font-family: var(--font-body);
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: var(--space-sm);
+      display: block;
+    }
+
+    /* ============================================================
+       3. COLOR PALETTE
+    ============================================================ */
+    .palette-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+    }
+    .swatch {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .swatch-color {
+      width: 80px;
+      height: 80px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(0,0,0,0.1);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+    }
+    .swatch-name {
+      font-size: 11px;
+      font-weight: bold;
+      color: var(--color-text-dark);
+      text-align: center;
+    }
+    .swatch-hex {
+      font-size: 11px;
+      color: var(--color-text-muted);
+      font-family: monospace;
+    }
+
+    /* ============================================================
+       4. TYPOGRAPHY
+    ============================================================ */
+    .type-sample { margin-bottom: var(--space-md); }
+
+    .heading-hero {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-3xl);
+      font-weight: bold;
+      color: var(--color-primary);
+      text-shadow: var(--shadow-heading);
+      line-height: 1.15;
+    }
+    .heading-h2 {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-2xl);
+      font-weight: bold;
+      color: var(--color-primary);
+      line-height: 1.2;
+    }
+    .heading-h3 {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-xl);
+      font-weight: bold;
+      color: var(--color-primary);
+      line-height: 1.3;
+    }
+    .heading-h4 {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-lg);
+      font-weight: bold;
+      color: var(--color-primary);
+    }
+    .text-body {
+      font-family: var(--font-body);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-body);
+      line-height: 1.6;
+    }
+    .text-muted {
+      font-family: var(--font-body);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+    }
+    .text-card-title {
+      font-family: var(--font-condensed);
+      font-size: var(--font-size-md);
+      font-weight: bold;
+      color: var(--color-text-white);
+    }
+    .text-nav {
+      font-family: var(--font-body);
+      font-size: var(--font-size-sm);
+      font-weight: bold;
+      color: var(--color-text-white);
+      letter-spacing: 0.02em;
+    }
+
+    /* ============================================================
+       5. COMPONENTS
+    ============================================================ */
+
+    /* ── 5a. Navigation Sidebar ── */
+    .nav-sidebar {
+      display: inline-flex;
+      flex-direction: column;
+      width: 180px;
+      overflow: hidden;
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-card);
+    }
+    .nav-item {
+      display: block;
+      background: var(--color-nav-bg);
+      color: var(--color-nav-text);
+      font-family: var(--font-body);
+      font-size: var(--font-size-sm);
+      font-weight: bold;
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.18s ease;
+    }
+    .nav-item:last-child { border-bottom: none; }
+    .nav-item:hover { background: var(--color-nav-hover); }
+    .nav-item.active {
+      background: var(--color-nav-active);
+    }
+    .nav-item.has-submenu::after {
+      content: ' ›';
+      float: right;
+      opacity: 0.7;
+    }
+
+    /* ── 5b. Feature Cards (Golden/Tan) ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md);
+    }
+    .feature-card {
+      background: var(--color-accent);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg) var(--space-md) var(--space-lg) var(--space-md);
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-md);
+      color: var(--color-text-white);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.18);
+      transition: background 0.18s ease, transform 0.15s ease;
+      cursor: pointer;
+    }
+    .feature-card:hover {
+      background: var(--color-accent-dark);
+      transform: translateY(-2px);
+    }
+    .feature-card-icon {
+      width: 52px;
+      height: 52px;
+      flex-shrink: 0;
+      opacity: 0.92;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .feature-card-icon svg {
+      width: 100%;
+      height: 100%;
+      fill: none;
+      stroke: #fff;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .feature-card-body {}
+    .feature-card-title {
+      font-family: var(--font-condensed);
+      font-size: var(--font-size-md);
+      font-weight: bold;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    .feature-card-desc {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.45;
+    }
+
+    /* ── 5c. Location / Schedule Buttons ── */
+    .location-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+    }
+    .location-btn {
+      border: 2px solid var(--color-primary);
+      border-radius: var(--radius-lg);
+      padding: var(--space-md) var(--space-md);
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      background: #fff;
+      cursor: pointer;
+      transition: background 0.18s ease;
+      text-decoration: none;
+    }
+    .location-btn:hover { background: #eef3fc; }
+    .location-btn-icon {
+      font-size: 22px;
+      color: var(--color-primary);
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: center;
+    }
+    .location-btn-text {}
+    .location-btn-name {
+      font-family: var(--font-condensed);
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--color-primary);
+      line-height: 1.1;
+    }
+    .location-btn-time {
+      font-family: var(--font-condensed);
+      font-size: 14px;
+      font-weight: bold;
+      color: var(--color-primary);
+    }
+
+    /* ── 5d. CTA Button ── */
+    .btn-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      border: 2.5px solid var(--color-primary);
+      border-radius: var(--radius-pill);
+      padding: 14px 32px;
+      font-family: var(--font-condensed);
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--color-primary);
+      background: #fff;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.18s, color 0.18s;
+      letter-spacing: 0.02em;
+    }
+    .btn-cta:hover {
+      background: var(--color-primary);
+      color: #fff;
+    }
+    .btn-cta::after {
+      content: '→';
+      font-size: 18px;
+    }
+
+    /* ── 5e. Primary Filled Button ── */
+    .btn-primary {
+      display: inline-block;
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-pill);
+      padding: 12px 28px;
+      font-family: var(--font-condensed);
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.18s;
+      letter-spacing: 0.02em;
+    }
+    .btn-primary:hover { background: var(--color-primary-dark); }
+
+    /* ── 5f. Testimonial Card ── */
+    .testimonial-card {
+      background: #faf8f4;
+      border-radius: var(--radius-lg);
+      border: 2px solid #d4b87a;
+      padding: var(--space-lg);
+      position: relative;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.10);
+      max-width: 360px;
+    }
+    .testimonial-quote-icon {
+      font-size: 48px;
+      color: var(--color-primary);
+      line-height: 1;
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      font-family: Georgia, serif;
+      opacity: 0.6;
+    }
+    .testimonial-photo-placeholder {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--color-page-bg);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: var(--space-sm);
+    }
+    .testimonial-body {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--color-text-body);
+      line-height: 1.6;
+      margin-bottom: var(--space-sm);
+    }
+    .testimonial-author {
+      font-family: 'Georgia', serif;
+      font-style: italic;
+      font-size: 13px;
+      color: var(--color-text-muted);
+    }
+
+    /* ── 5g. Social Icons ── */
+    .social-row {
+      display: flex;
+      gap: var(--space-sm);
+      align-items: center;
+    }
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 18px;
+      text-decoration: none;
+      font-weight: bold;
+      font-family: var(--font-body);
+      transition: opacity 0.15s;
+    }
+    .social-icon:hover { opacity: 0.82; }
+    .social-icon.yt  { background: var(--color-youtube); }
+    .social-icon.fb  { background: var(--color-facebook); }
+    .social-icon.ig  { background: var(--color-instagram); }
+    .social-icon.pin { background: var(--color-pinterest); }
+
+    /* ── 5h. Hero Header Bar ── */
+    .header-bar {
+      background: var(--color-header-bar);
+      width: 100%;
+      height: 52px;
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      display: flex;
+      align-items: center;
+      padding: 0 var(--space-lg);
+    }
+
+    /* ── 5i. Photo Badge ── */
+    .photo-badge {
+      width: 220px;
+      height: 220px;
+      border-radius: var(--radius-lg);
+      border: 4px solid #c8a86a;
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      background: var(--color-page-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: var(--color-text-muted);
+    }
+    .photo-circle {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 4px solid #c8a86a;
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      background: var(--color-page-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: var(--color-text-muted);
+    }
+
+    /* ── 5j. Hero / Banner Layout ── */
+    .hero-layout {
+      display: flex;
+      gap: var(--space-xl);
+      align-items: flex-start;
+    }
+    .hero-text { flex: 1; }
+    .hero-image { flex-shrink: 0; }
+
+    /* ── 5k. Two-column content layout ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+    }
+
+    /* ── 5l. Bullet list ── */
+    .content-list {
+      list-style: none;
+      padding: 0;
+    }
+    .content-list li {
+      font-family: var(--font-body);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-body);
+      padding: 4px 0;
+      padding-left: 20px;
+      position: relative;
+    }
+    .content-list li::before {
+      content: '·';
+      position: absolute;
+      left: 6px;
+      color: var(--color-primary);
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 1;
+      top: 2px;
+    }
+
+    /* ── 5m. Footer ── */
+    .footer-bar {
+      background: var(--color-footer-bg);
+      border-top: 3px solid var(--color-page-bg);
+      padding: var(--space-lg) var(--space-xl);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+    }
+    .footer-copy {
+      font-family: var(--font-body);
+      font-size: 11px;
+      color: var(--color-text-muted);
+    }
+
+    /* ============================================================
+       6. LAYOUT WRAPPER COMPONENT
+    ============================================================ */
+    .page-shell {
+      background: var(--color-page-bg);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+    .page-shell-inner {
+      display: flex;
+    }
+    .page-shell-sidebar {
+      width: 190px;
+      flex-shrink: 0;
+      background: transparent;
+    }
+    .page-shell-content {
+      flex: 1;
+      background: var(--color-content-bg);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-card);
+    }
+
+    /* ── Utility helpers ── */
+    .mt-sm { margin-top: var(--space-sm); }
+    .mt-md { margin-top: var(--space-md); }
+    .mt-lg { margin-top: var(--space-lg); }
+    .row { display: flex; gap: var(--space-md); flex-wrap: wrap; align-items: flex-start; }
+
+    /* ── Kit page header ── */
+    .kit-header {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+      padding: var(--space-xl);
+      background: var(--color-header-bar);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-card);
+    }
+    .kit-header h1 {
+      font-family: var(--font-heading);
+      font-size: 30px;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .kit-header p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.65);
+      font-family: var(--font-body);
+    }
+  </style>
+</head>
+<body>
+<div class="kit-page">
+
+  <div class="kit-header">
+    <h1>McKaynine — UI Kit</h1>
+    <p>Design system scraped from mckaynine.co.za &nbsp;·&nbsp; May 2026</p>
+  </div>
+
+  <!-- 1. COLOR PALETTE -->
+  <div class="kit-section">
+    <div class="kit-section-title">1. Color Palette</div>
+    <div class="palette-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#3569BF"></div>
+        <div class="swatch-name">Primary Blue</div>
+        <div class="swatch-hex">#3569BF</div>
+        <span class="kit-label">Headings · Links · Accents</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#2A50A0"></div>
+        <div class="swatch-name">Primary Dark</div>
+        <div class="swatch-hex">#2A50A0</div>
+        <span class="kit-label">Hover states</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#B8914F"></div>
+        <div class="swatch-name">Accent Gold</div>
+        <div class="swatch-hex">#B8914F</div>
+        <span class="kit-label">Feature cards</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#9E7A3D"></div>
+        <div class="swatch-name">Accent Dark</div>
+        <div class="swatch-hex">#9E7A3D</div>
+        <span class="kit-label">Card hover</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#7A7E8A"></div>
+        <div class="swatch-name">Nav Grey</div>
+        <div class="swatch-hex">#7A7E8A</div>
+        <span class="kit-label">Sidebar navigation</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#666666"></div>
+        <div class="swatch-name">Muted Grey</div>
+        <div class="swatch-hex">#666666</div>
+        <span class="kit-label">Nav hover · body text</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#1A1D2E"></div>
+        <div class="swatch-name">Header Navy</div>
+        <div class="swatch-hex">#1A1D2E</div>
+        <span class="kit-label">Top header bar</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#D4D6DF"></div>
+        <div class="swatch-name">Page BG</div>
+        <div class="swatch-hex">#D4D6DF</div>
+        <span class="kit-label">Outer background</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#FFFFFF; border:1px solid #ddd;"></div>
+        <div class="swatch-name">Content BG</div>
+        <div class="swatch-hex">#FFFFFF</div>
+        <span class="kit-label">Main content area</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. TYPOGRAPHY -->
+  <div class="kit-section">
+    <div class="kit-section-title">2. Typography</div>
+
+    <div class="type-sample">
+      <div class="heading-hero">Give your puppy the best start in life</div>
+      <span class="kit-label">Hero H1 — Trebuchet MS Bold, 36px, #3569BF, text-shadow</span>
+    </div>
+    <div class="type-sample">
+      <div class="heading-h2">What's included in our puppy course?</div>
+      <span class="kit-label">H2 — Trebuchet MS Bold, 32px, #3569BF</span>
+    </div>
+    <div class="type-sample">
+      <div class="heading-h3">What your puppy will learn</div>
+      <span class="kit-label">H3 — Trebuchet MS Bold, 24px, #3569BF</span>
+    </div>
+    <div class="type-sample">
+      <div class="heading-h4">Trusted by puppy families across Johannesburg &amp; Pretoria</div>
+      <span class="kit-label">H4 — Trebuchet MS Bold, 22px, #3569BF</span>
+    </div>
+    <div class="type-sample">
+      <div class="text-body">Trusted by puppy families since 1999, McKaynine's puppy classes are tried-and-tested, helping puppies and their people build confidence, life skills, and a strong relationship from day one.</div>
+      <span class="kit-label">Body — Arial, 13px, #444444</span>
+    </div>
+    <div class="type-sample">
+      <div class="text-muted">© McKaynine (Pty) Ltd t/a McKaynine Training Centre — Established 1999</div>
+      <span class="kit-label">Muted — Arial, 13px, #666666</span>
+    </div>
+    <div class="type-sample">
+      <div class="text-card-title" style="background:#B8914F; padding:8px 12px; border-radius:6px; display:inline-block;">2 month programme</div>
+      <span class="kit-label">Card Title — Open Sans Condensed Bold, 20px, #FFFFFF</span>
+    </div>
+    <div class="type-sample">
+      <div class="text-nav" style="background:#7A7E8A; padding:10px 16px; border-radius:6px; display:inline-block;">Puppy Classes</div>
+      <span class="kit-label">Nav Label — Arial Bold, 13px, #FFFFFF</span>
+    </div>
+  </div>
+
+  <!-- 3. NAVIGATION SIDEBAR -->
+  <div class="kit-section">
+    <div class="kit-section-title">3. Navigation — Sidebar</div>
+    <div class="row">
+      <div>
+        <nav class="nav-sidebar">
+          <a class="nav-item" href="#">Home</a>
+          <a class="nav-item" href="#">FAQ's</a>
+          <a class="nav-item" href="#">About Us</a>
+          <a class="nav-item active" href="#">Puppy Classes</a>
+          <a class="nav-item" href="#">Obedience</a>
+          <a class="nav-item" href="#">Canine Good Citizen</a>
+          <a class="nav-item has-submenu" href="#">Dog Sport</a>
+          <a class="nav-item" href="#">Behaviour Problems</a>
+          <a class="nav-item" href="#">Instructor Training</a>
+          <a class="nav-item" href="#">Online Solutions</a>
+          <a class="nav-item" href="#">Schedules</a>
+          <a class="nav-item" href="#">Contact</a>
+          <a class="nav-item" href="#">T&amp;C's</a>
+        </nav>
+        <span class="kit-label">Default · Active · Hover states</span>
+      </div>
+      <div style="padding-left: 24px; padding-top: 8px;">
+        <p style="font-size:13px; color:#444; margin-bottom:12px;"><strong>States:</strong></p>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="background:#7A7E8A; color:#fff; font-family:Arial; font-size:13px; font-weight:bold; padding:12px 16px; border-radius:4px; width:180px;">Default</div>
+          <div style="background:#3569BF; color:#fff; font-family:Arial; font-size:13px; font-weight:bold; padding:12px 16px; border-radius:4px; width:180px;">Active / Current page</div>
+          <div style="background:#666666; color:#fff; font-family:Arial; font-size:13px; font-weight:bold; padding:12px 16px; border-radius:4px; width:180px;">Hover</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. FEATURE CARDS -->
+  <div class="kit-section">
+    <div class="kit-section-title">4. Feature Cards — Golden Accent</div>
+    <div class="card-grid">
+
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <rect x="6" y="8" width="36" height="34" rx="3"/>
+            <line x1="6" y1="18" x2="42" y2="18"/>
+            <line x1="16" y1="4" x2="16" y2="12"/>
+            <line x1="32" y1="4" x2="32" y2="12"/>
+            <rect x="12" y="24" width="8" height="8" rx="1"/>
+            <rect x="28" y="24" width="8" height="8" rx="1"/>
+            <circle cx="32" cy="34" r="7" stroke-width="2"/>
+            <line x1="32" y1="30" x2="32" y2="34"/>
+            <line x1="32" y1="34" x2="35" y2="34"/>
+          </svg>
+        </div>
+        <div class="feature-card-body">
+          <div class="feature-card-title">2 month programme</div>
+          <div class="feature-card-desc">Six structured lessons with clear progression</div>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="18" cy="14" r="7"/>
+            <circle cx="32" cy="14" r="7"/>
+            <path d="M4 40c0-8 6-14 14-14h12c8 0 14 6 14 14"/>
+            <circle cx="36" cy="28" r="5"/>
+            <path d="M38 33c2 1 4 3 4 7"/>
+          </svg>
+        </div>
+        <div class="feature-card-body">
+          <div class="feature-card-title">Supportive Classes</div>
+          <div class="feature-card-desc">Calm, controlled learning environment</div>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="24" cy="24" r="16"/>
+            <circle cx="18" cy="14" r="5"/>
+            <circle cx="30" cy="10" r="4"/>
+            <line x1="20" y1="18" x2="24" y2="22"/>
+            <line x1="28" y1="14" x2="25" y2="21"/>
+            <path d="M14 32c2-6 8-10 10-10s8 4 10 10"/>
+          </svg>
+        </div>
+        <div class="feature-card-body">
+          <div class="feature-card-title">Science-based Training</div>
+          <div class="feature-card-desc">Clear, kind, modern proven methods</div>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="22" cy="10" r="6"/>
+            <path d="M16 18h12l3 14H13L16 18z"/>
+            <line x1="22" y1="32" x2="22" y2="44"/>
+            <line x1="16" y1="44" x2="28" y2="44"/>
+            <ellipse cx="36" cy="38" rx="7" ry="5"/>
+            <circle cx="34" cy="32" r="4"/>
+            <line x1="30" y1="43" x2="28" y2="46"/>
+            <line x1="34" y1="43" x2="33" y2="46"/>
+            <line x1="38" y1="43" x2="39" y2="46"/>
+            <line x1="42" y1="43" x2="44" y2="46"/>
+          </svg>
+        </div>
+        <div class="feature-card-body">
+          <div class="feature-card-title">Real-life skills</div>
+          <div class="feature-card-desc">Confidence where it actually matters</div>
+        </div>
+      </div>
+
+    </div>
+    <span class="kit-label mt-md">Background: #B8914F · Hover: #9E7A3D · Border-radius: 18px · Icon: white SVG stroke · Title: Open Sans Condensed Bold 20px · Desc: Arial 13px</span>
+  </div>
+
+  <!-- 5. BUTTONS -->
+  <div class="kit-section">
+    <div class="kit-section-title">5. Buttons</div>
+    <div class="row">
+      <div>
+        <a class="btn-cta" href="#">Find My Nearest Branch</a>
+        <span class="kit-label">CTA Outline Button — pill, border #3569BF, fills on hover</span>
+      </div>
+      <div>
+        <a class="btn-primary" href="#">Enrol Now</a>
+        <span class="kit-label">Primary Filled Button — pill, bg #3569BF</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. LOCATION BUTTONS -->
+  <div class="kit-section">
+    <div class="kit-section-title">6. Location / Schedule Buttons</div>
+    <div class="location-grid">
+      <a class="location-btn" href="#">
+        <div class="location-btn-icon">📍</div>
+        <div class="location-btn-text">
+          <div class="location-btn-name">Fourways</div>
+          <div class="location-btn-time">Sat 08:00</div>
+        </div>
+      </a>
+      <a class="location-btn" href="#">
+        <div class="location-btn-icon">📍</div>
+        <div class="location-btn-text">
+          <div class="location-btn-name">Centurion</div>
+          <div class="location-btn-time">Sun 09:00</div>
+        </div>
+      </a>
+      <a class="location-btn" href="#">
+        <div class="location-btn-icon">📍</div>
+        <div class="location-btn-text">
+          <div class="location-btn-name">Midrand</div>
+          <div class="location-btn-time">Sat 10:00</div>
+        </div>
+      </a>
+    </div>
+    <span class="kit-label mt-md">Border: 2px #3569BF · Border-radius: 18px · Hover: #eef3fc bg · Font: Open Sans Condensed Bold</span>
+  </div>
+
+  <!-- 7. TESTIMONIAL -->
+  <div class="kit-section">
+    <div class="kit-section-title">7. Testimonial Card</div>
+    <div class="testimonial-card">
+      <div class="testimonial-quote-icon">"</div>
+      <div class="testimonial-photo-placeholder">🐕</div>
+      <div class="testimonial-body">
+        Our puppy Max was a handful before McKaynine — now he sits, stays, and walks beautifully on lead. The trainers are patient, knowledgeable, and genuinely care about both dog and owner.
+      </div>
+      <div class="testimonial-author">— Sarah M., Fourways</div>
+    </div>
+    <span class="kit-label mt-md">Background: #faf8f4 · Border: 2px #d4b87a · Quote icon: Georgia serif · Author: italic</span>
+  </div>
+
+  <!-- 8. SOCIAL ICONS -->
+  <div class="kit-section">
+    <div class="kit-section-title">8. Social Icons</div>
+    <div class="social-row">
+      <a class="social-icon yt" href="#" title="YouTube">▶</a>
+      <a class="social-icon fb" href="#" title="Facebook">f</a>
+      <a class="social-icon ig" href="#" title="Instagram">◉</a>
+      <a class="social-icon pin" href="#" title="Pinterest">P</a>
+    </div>
+    <span class="kit-label mt-md">YouTube #CC0000 · Facebook #3B5998 · Instagram #C13584 · Pinterest #E60023 · 40×40px rounded</span>
+  </div>
+
+  <!-- 9. PHOTO FRAMES -->
+  <div class="kit-section">
+    <div class="kit-section-title">9. Photo Frames</div>
+    <div class="row">
+      <div>
+        <div class="photo-badge">220×220 Photo</div>
+        <span class="kit-label">Rounded rect · border #c8a86a</span>
+      </div>
+      <div>
+        <div class="photo-circle">Circle Photo</div>
+        <span class="kit-label">Circle · border #c8a86a</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. BULLET LIST -->
+  <div class="kit-section">
+    <div class="kit-section-title">10. Content Bullet List</div>
+    <ul class="content-list">
+      <li>Sit, down, stand, stay, come when called</li>
+      <li>Loose-lead walking and greetings</li>
+      <li>Socialisation with people and other dogs</li>
+      <li>Impulse control and focus exercises</li>
+      <li>Handling and grooming preparation</li>
+    </ul>
+    <span class="kit-label mt-md">Bullet: blue dot · Font: Arial 13px #444444</span>
+  </div>
+
+  <!-- 11. PAGE SHELL LAYOUT -->
+  <div class="kit-section">
+    <div class="kit-section-title">11. Page Shell Layout</div>
+    <div class="page-shell" style="max-width:600px;">
+      <div class="header-bar">
+        <span style="color:#fff; font-family:Arial; font-size:13px; font-weight:bold;">McKaynine Training Centre</span>
+      </div>
+      <div class="page-shell-inner">
+        <div class="page-shell-sidebar">
+          <nav class="nav-sidebar" style="width:100%; border-radius:0; box-shadow:none;">
+            <a class="nav-item" href="#">Home</a>
+            <a class="nav-item active" href="#">Puppy Classes</a>
+            <a class="nav-item" href="#">Obedience</a>
+            <a class="nav-item" href="#">Contact</a>
+          </nav>
+        </div>
+        <div class="page-shell-content">
+          <div class="heading-h3" style="margin-bottom:12px;">Puppy Classes</div>
+          <p class="text-body">A 6-week programme for puppies aged 8–16 weeks. Build confidence, bite inhibition, and the foundations of a great life together.</p>
+          <div style="margin-top:16px;">
+            <a class="btn-primary" href="#">Enrol Now</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bar">
+        <div class="footer-copy">© McKaynine (Pty) Ltd — Established 1999</div>
+        <div class="social-row">
+          <a class="social-icon yt" href="#" title="YouTube" style="width:28px;height:28px;font-size:12px;">▶</a>
+          <a class="social-icon fb" href="#" title="Facebook" style="width:28px;height:28px;font-size:12px;">f</a>
+          <a class="social-icon ig" href="#" title="Instagram" style="width:28px;height:28px;font-size:12px;">◉</a>
+        </div>
+      </div>
+    </div>
+    <span class="kit-label mt-md">Full page shell: dark header bar + grey sidebar nav + white content area + footer</span>
+  </div>
+
+</div>
+</body>
+</html>
