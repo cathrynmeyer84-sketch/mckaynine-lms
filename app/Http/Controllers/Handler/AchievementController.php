@@ -9,6 +9,7 @@ class AchievementController extends Controller
     public function index()
     {
         $handler = auth()->user()->handler;
+        abort_unless($handler, 403);
 
         // Mark achievement notifications as read
         auth()->user()->appNotifications()

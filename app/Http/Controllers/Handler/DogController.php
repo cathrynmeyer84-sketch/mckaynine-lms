@@ -12,6 +12,7 @@ class DogController extends Controller
     public function index()
     {
         $handler = auth()->user()->handler;
+        abort_unless($handler, 403);
         $dogs = $handler->dogs()->with('enrolments.dogClass')->get();
         return view('handler.dogs.index', compact('dogs'));
     }
@@ -19,6 +20,7 @@ class DogController extends Controller
     public function edit(Dog $dog)
     {
         $handler = auth()->user()->handler;
+        abort_unless($handler, 403);
         abort_unless($dog->handler_id === $handler->id, 403);
         return view('handler.dogs.edit', compact('dog'));
     }
@@ -26,6 +28,7 @@ class DogController extends Controller
     public function update(Request $request, Dog $dog)
     {
         $handler = auth()->user()->handler;
+        abort_unless($handler, 403);
         abort_unless($dog->handler_id === $handler->id, 403);
 
         $data = $request->validate([

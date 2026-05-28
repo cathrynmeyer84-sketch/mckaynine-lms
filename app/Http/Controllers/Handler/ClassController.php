@@ -13,6 +13,7 @@ class ClassController extends Controller
     public function index()
     {
         $handler = auth()->user()->handler;
+        abort_unless($handler, 403);
         $enrolments = $handler->enrolments()
             ->with(['dogClass', 'dog', 'examResult'])
             ->orderByDesc('enrolled_at')
@@ -23,6 +24,7 @@ class ClassController extends Controller
     public function show(Enrolment $enrolment)
     {
         $handler = auth()->user()->handler;
+        abort_unless($handler, 403);
         abort_unless($enrolment->handler_id === $handler->id, 403);
 
         $enrolment->load([
@@ -40,6 +42,7 @@ class ClassController extends Controller
     public function weekContent(Enrolment $enrolment, ClassDate $classDate)
     {
         $handler = auth()->user()->handler;
+        abort_unless($handler, 403);
         abort_unless($enrolment->handler_id === $handler->id, 403);
         abort_unless($classDate->class_id === $enrolment->class_id, 404);
         abort_unless($classDate->isContentPublished(), 403, 'Content not yet available.');
@@ -53,6 +56,7 @@ class ClassController extends Controller
     public function surveyForm(Enrolment $enrolment)
     {
         $handler = auth()->user()->handler;
+        abort_unless($handler, 403);
         abort_unless($enrolment->handler_id === $handler->id, 403);
         abort_unless($enrolment->dogClass->status === 'completed', 403, 'Survey only available after class completion.');
 
@@ -63,6 +67,7 @@ class ClassController extends Controller
     public function storeSurvey(Request $request, Enrolment $enrolment)
     {
         $handler = auth()->user()->handler;
+        abort_unless($handler, 403);
         abort_unless($enrolment->handler_id === $handler->id, 403);
 
         $data = $request->validate([
