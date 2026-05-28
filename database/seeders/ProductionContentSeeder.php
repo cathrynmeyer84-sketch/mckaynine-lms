@@ -46,7 +46,10 @@ class ProductionContentSeeder extends Seeder
             return;
         }
 
+        $adminId = \App\Models\User::where('is_admin', true)->value('id') ?? 1;
+
         foreach ($resources as $r) {
+            $r['created_by'] = $adminId;
             Resource::create($r);
         }
 
