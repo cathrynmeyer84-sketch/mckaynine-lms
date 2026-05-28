@@ -11,7 +11,13 @@ class ClassTypeController extends Controller
     public function index()
     {
         $classTypes = ClassType::withCount('classes')->with('weeks')->orderBy('name')->get();
-        return view('admin.class-types.index', compact('classTypes'));
+
+        $grouped = [
+            'structured' => $classTypes->where('has_structured_content', true)->values(),
+            'monthly'    => $classTypes->where('has_structured_content', false)->values(),
+        ];
+
+        return view('admin.class-types.index', compact('classTypes', 'grouped'));
     }
 
     public function create()
