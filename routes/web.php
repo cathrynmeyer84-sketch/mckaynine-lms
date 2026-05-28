@@ -17,8 +17,8 @@ Route::get('/', function () {
     if (auth()->check()) {
         return redirect()->route('dashboard');
     }
-    $puppyClass   = \App\Models\ClassType::where('page_template', 'puppy')->where('info_page_enabled', true)->first();
-    $groupClasses = \App\Models\ClassType::where('page_template', '!=', 'puppy')->where('info_page_enabled', true)->orderBy('name')->get();
+    $puppyClass   = \App\Models\ClassType::where('is_entry_class', true)->where('info_page_enabled', true)->first();
+    $groupClasses = \App\Models\ClassType::where('is_entry_class', false)->where('info_page_enabled', true)->orderBy('name')->get();
     $branch       = \App\Models\BranchSetting::current();
     return view('welcome', compact('puppyClass', 'groupClasses', 'branch'));
 });
@@ -158,10 +158,13 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::post('/assessments/{assessmentRequest}/score', [Admin\AssessmentController::class, 'storeScore'])->name('assessments.score.store');
     Route::post('/assessments/{assessmentScore}/release', [Admin\AssessmentController::class, 'releaseOutcome'])->name('assessments.release');
 
-    // Inbox
+    // Inbox — specific routes MUST come before the {conversation} wildcard
     Route::get('/inbox', [Admin\InboxController::class, 'index'])->name('inbox.index');
     Route::get('/inbox/compose', [Admin\InboxController::class, 'create'])->name('inbox.compose');
     Route::post('/inbox', [Admin\InboxController::class, 'store'])->name('inbox.store');
+    Route::get('/inbox/templates', [Admin\InboxController::class, 'templates'])->name('inbox.templates.index');
+    Route::get('/inbox/templates/{template}/edit', [Admin\InboxController::class, 'editTemplate'])->name('inbox.templates.edit');
+    Route::post('/inbox/templates/{template}', [Admin\InboxController::class, 'updateTemplate'])->name('inbox.templates.update');
     Route::get('/inbox/{conversation}', [Admin\InboxController::class, 'show'])->name('inbox.show');
     Route::post('/inbox/{conversation}/reply', [Admin\InboxController::class, 'reply'])->name('inbox.reply');
 
@@ -190,11 +193,6 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
         Route::get('/email-templates', [Admin\EmailTemplateController::class, 'index'])->name('email-templates.index');
         Route::get('/email-templates/{emailTemplate}/edit', [Admin\EmailTemplateController::class, 'edit'])->name('email-templates.edit');
         Route::put('/email-templates/{emailTemplate}', [Admin\EmailTemplateController::class, 'update'])->name('email-templates.update');
-
-        // Inbox message templates
-        Route::get('/inbox/templates', [Admin\InboxController::class, 'templates'])->name('inbox.templates.index');
-        Route::get('/inbox/templates/{template}/edit', [Admin\InboxController::class, 'editTemplate'])->name('inbox.templates.edit');
-        Route::post('/inbox/templates/{template}', [Admin\InboxController::class, 'updateTemplate'])->name('inbox.templates.update');
 
         // Class Types + Grading setup
         Route::resource('class-types', Admin\ClassTypeController::class);
@@ -246,6 +244,11 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 
         // Calendar settings
         Route::post('/calendar/settings', [Admin\CalendarController::class, 'saveSettings'])->name('calendar.settings.save');
+
+        // School years
+        Route::post('/calendar/school-years', [Admin\CalendarController::class, 'storeSchoolYear'])->name('calendar.school-years.store');
+        Route::put('/calendar/school-years/{schoolYear}', [Admin\CalendarController::class, 'updateSchoolYear'])->name('calendar.school-years.update');
+        Route::delete('/calendar/school-years/{schoolYear}', [Admin\CalendarController::class, 'destroySchoolYear'])->name('calendar.school-years.destroy');
 
     }); // end super_admin
 
@@ -358,6 +361,9 @@ Route::middleware(['auth', 'verified'])->prefix('my')->name('handler.')->group(f
     // Vet clearance upload
     Route::get('/vet-clearance/{enrolment}', [Handler\VetClearanceController::class, 'show'])->name('vet-clearance.upload');
     Route::post('/vet-clearance/{enrolment}', [Handler\VetClearanceController::class, 'upload'])->name('vet-clearance.upload.store');
+
+    // Calendar (off days / school breaks)
+    Route::get('/calendar', [Handler\CalendarController::class, 'index'])->name('calendar');
 
     // Billing portal
     Route::get('/billing', [Handler\BillingController::class, 'index'])->name('billing.index');

@@ -15,6 +15,6 @@ class AppSetting extends Model
 
     public static function set(string $key, ?string $value): void
     {
-        static::where('key', $key)->update(['value' => $value]);
+        static::updateOrCreate(['key' => $key], ['value' => $value]);
     }
 }

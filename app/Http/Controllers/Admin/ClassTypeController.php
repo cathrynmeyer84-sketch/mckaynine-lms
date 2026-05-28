@@ -409,10 +409,20 @@ class ClassTypeController extends Controller
             $slug = \Illuminate\Support\Str::slug($classType->name);
         }
 
+        $isEntryClass = $request->boolean('is_entry_class');
+
+        // Enforce single entry class — clear any other class type that has it set
+        if ($isEntryClass) {
+            \App\Models\ClassType::where('id', '!=', $classType->id)
+                ->where('is_entry_class', true)
+                ->update(['is_entry_class' => false]);
+        }
+
         $update = [
             'info_page_enabled'       => $infoPageEnabled,
             'is_public'               => $request->boolean('is_public'),
             'individual_class_pages'  => $request->boolean('individual_class_pages'),
+            'is_entry_class'          => $isEntryClass,
             'slug'              => $slug,
             'page_template'     => $request->input('page_template', 'default'),
             'tagline'           => $request->input('tagline'),

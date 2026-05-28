@@ -2,18 +2,17 @@
 
 namespace App\Console\Commands;
 
-use App\Mail\OffWeekReminder;
-use App\Models\{AppSetting, CalendarDay, ClassDate, Enrolment};
+use App\Models\{AppSetting, CalendarDay, ClassDate};
+use App\Services\MessageService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Mail;
 
 class SendOffWeekReminders extends Command
 {
     protected $signature   = 'calendar:send-off-day-reminders';
-    protected $description = 'Send reminder emails to handlers whose class is cancelled on an upcoming off day';
+    protected $description = 'Send in-app reminder messages to handlers whose class is cancelled on an upcoming off day';
 
-    public function handle(): void
+    public function handle(MessageService $messages): void
     {
         $days = (int) AppSetting::get('off_day_reminder_days', '3');
         $targetDate = Carbon::now()->addDays($days)->toDateString();
@@ -29,6 +28,9 @@ class SendOffWeekReminders extends Command
             return;
         }
 
+        $offDate   = $offDay->date->format('l, d F Y');
+        $offReason = $offDay->label ?: 'a scheduled break';
+
         // Find class dates that fall on this specific off day
         $classDates = ClassDate::where('date', $targetDate)
             ->where('is_off_week', true)
@@ -37,17 +39,39 @@ class SendOffWeekReminders extends Command
 
         $sent = 0;
         foreach ($classDates as $classDate) {
-            foreach ($classDate->class->enrolments as $enrolment) {
-                $email = $enrolment->handler?->user?->email;
-                if (!$email) continue;
+            $class = $classDate->class;
 
-                Mail::to($email)->send(new OffWeekReminder($enrolment, $offDay, $classDate));
+            // Find the next active class date after this off day
+            $nextActive = ClassDate::where('class_id', $class->id)
+                ->where('date', '>', $classDate->date->toDateString())
+                ->where('is_off_week', false)
+                ->orderBy('date')
+                ->first();
+            $nextClassDate = $nextActive ? $nextActive->date->format('l, d F Y') : 'TBC';
+
+            foreach ($class->enrolments as $enrolment) {
+                $handlerUser = $enrolment->handler?->user;
+                if (!$handlerUser) continue;
+
+                $messages->sendTemplateToHandler(
+                    'off_week_reminder',
+                    $handlerUser,
+                    [
+                        'handler'         => $enrolment->handler,
+                        'dog'             => $enrolment->dog,
+                        'class'           => $class,
+                        'off_date'        => $offDate,
+                        'off_reason'      => $offReason,
+                        'next_class_date' => $nextClassDate,
+                    ],
+                    classId: $class->id,
+                );
                 $sent++;
             }
         }
 
         $offDay->update(['reminder_sent' => true]);
 
-        $this->info("Sent {$sent} off-day reminder(s) for {$targetDate}.");
+        $this->info("Sent {$sent} off-day reminder message(s) for {$targetDate}.");
     }
 }

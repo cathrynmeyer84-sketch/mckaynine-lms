@@ -136,18 +136,18 @@ class EnrolmentController extends Controller
         $today = now()->startOfDay();
 
         // Only show classes belonging to puppy-type class types
-        $puppyQuery = fn($q) => $q->whereHas('classType', fn($ct) => $ct->where('page_template', 'puppy'));
+        $puppyQuery = fn($q) => $q->whereHas('classType', fn($ct) => $ct->where('is_entry_class', true));
 
         // Upcoming puppy classes
         $upcoming = DogClass::where('start_date', '>', $today)
-            ->whereHas('classType', fn($ct) => $ct->where('page_template', 'puppy'))
+            ->whereHas('classType', fn($ct) => $ct->where('is_entry_class', true))
             ->orderBy('start_date')
             ->get();
 
         // Active puppy classes where the 2nd scheduled date hasn't passed yet
         $activeEnrollable = DogClass::where('start_date', '<=', $today)
             ->where('end_date', '>=', $today)
-            ->whereHas('classType', fn($ct) => $ct->where('page_template', 'puppy'))
+            ->whereHas('classType', fn($ct) => $ct->where('is_entry_class', true))
             ->with(['scheduledDates' => fn($q) => $q->where('is_off_week', false)->orderBy('date')])
             ->get()
             ->filter(function ($class) use ($today) {

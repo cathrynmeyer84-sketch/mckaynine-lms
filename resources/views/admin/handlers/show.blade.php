@@ -116,6 +116,7 @@
                         @if($handler->status !== $s)
                         <form method="POST" action="{{ route('admin.handlers.status', $handler) }}">
                             @csrf
+                            @method('PATCH')
                             <input type="hidden" name="status" value="{{ $s }}">
                             <button type="submit" class="btn-outline btn-sm">Set {{ ucfirst($s) }}</button>
                         </form>

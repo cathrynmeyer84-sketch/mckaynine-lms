@@ -22,6 +22,12 @@
                 <span class="text-sm font-medium text-navy">Individual class pages</span>
                 <span class="text-xs text-gray-400">(each class gets its own sub-page; type page shows a "choose a class" grid)</span>
             </label>
+            <label class="flex items-center gap-3 cursor-pointer">
+                <input type="checkbox" name="is_entry_class" value="1" class="rounded border-gray-300 text-brand"
+                    {{ $classType->is_entry_class ? 'checked' : '' }}>
+                <span class="text-sm font-medium text-navy">Entry class</span>
+                <span class="text-xs text-gray-400">(only one class type can be marked as entry — this drives the "Enrol Now" button and the puppy enrolment form for dogs under 4 months)</span>
+            </label>
         </div>
 
         <div class="grid grid-cols-2 gap-4">

@@ -13,7 +13,7 @@ class ClassType extends Model
         'slug', 'tagline', 'hero_heading', 'about', 'general_schedule', 'cost_from', 'cost_notes',
         'image_path', 'image_mobile_path', 'promo_video_url', 'gallery_images', 'fees_image_path', 'fees_image_mobile_path',
         'testimonial_text', 'testimonial_name', 'testimonial_photo_path',
-        'page_template', 'info_page_enabled', 'is_public', 'individual_class_pages',
+        'page_template', 'is_entry_class', 'info_page_enabled', 'is_public', 'individual_class_pages',
         'color_theme', 'hero_overlay_color',
         'trust_strap', 'helps_with', 'age_requirements', 'what_to_bring', 'how_to_join_steps', 'joining_notes',
         'cta_type',
@@ -26,6 +26,7 @@ class ClassType extends Model
     protected $casts = [
         'has_structured_content'       => 'boolean',
         'has_grading'                  => 'boolean',
+        'is_entry_class'               => 'boolean',
         'term_weeks'                   => 'integer',
         'gallery_images'               => 'array',
         'info_page_enabled'            => 'boolean',

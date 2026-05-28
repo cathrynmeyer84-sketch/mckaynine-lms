@@ -61,6 +61,9 @@ class MessageService
             '{{instructor_names}}' => $context['class']?->instructors->map(fn($i) => $i->first_name . ' ' . $i->last_name)->join(', ') ?? '',
             '{{week_number}}'     => isset($context['week_number']) ? (string) $context['week_number'] : '',
             '{{result_url}}'      => isset($context['enrolment']) ? '/my/classes/' . $context['enrolment']->id . '?tab=result' : '/my/achievements',
+            '{{off_date}}'        => $context['off_date'] ?? '',
+            '{{off_reason}}'      => $context['off_reason'] ?? '',
+            '{{next_class_date}}' => $context['next_class_date'] ?? '',
         ]);
     }
 

@@ -182,7 +182,7 @@ class AssessmentController extends Controller
         $assessmentRequest->load(['handler', 'dog']);
         $existingScore = $assessmentRequest->scores;
         $availableClassTypes = \App\Models\ClassType::where('info_page_enabled', true)
-            ->where('page_template', '!=', 'puppy')
+            ->where('is_entry_class', false)
             ->orderBy('name')
             ->get();
         return view('admin.assessments.score', compact('assessmentRequest', 'existingScore', 'availableClassTypes'));

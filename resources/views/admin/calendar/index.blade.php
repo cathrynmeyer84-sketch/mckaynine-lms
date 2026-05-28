@@ -97,44 +97,128 @@
     @endforeach
 </div>
 
-{{-- Off-Day Reminder Email Settings --}}
+{{-- School Years --}}
 <div class="card">
-    <h2 class="text-base font-semibold text-navy mb-1">Off-Day Reminder Email</h2>
+    <h2 class="text-base font-semibold text-navy mb-1">School Years</h2>
     <p class="text-sm text-gray-500 mb-5">
-        Automatically sent to enrolled handlers before a cancelled class day. Placeholders:
-        <code class="text-xs bg-stone/30 px-1 rounded">{handler_name}</code>
-        <code class="text-xs bg-stone/30 px-1 rounded">{dog_name}</code>
-        <code class="text-xs bg-stone/30 px-1 rounded">{class_name}</code>
-        <code class="text-xs bg-stone/30 px-1 rounded">{off_date}</code>
-        <code class="text-xs bg-stone/30 px-1 rounded">{off_reason}</code>
-        <code class="text-xs bg-stone/30 px-1 rounded">{next_class_date}</code>
+        Define school year windows. The handler calendar automatically shows whichever year
+        contains today — or the next upcoming one if you've set it up in advance.
+        You can add next year's dates now and the changeover happens automatically.
     </p>
 
-    <form action="{{ route('admin.calendar.settings.save') }}" method="POST" class="space-y-5">
+    {{-- Existing years --}}
+    @if($schoolYears->isNotEmpty())
+    <div class="space-y-3 mb-6">
+        @foreach($schoolYears as $sy)
+        @php $isCurrent = $sy->start_date->lte(today()) && $sy->end_date->gte(today()); @endphp
+        <div x-data="{ editing: false }" class="border rounded-lg px-4 py-3 {{ $isCurrent ? 'border-brand/40 bg-brand/5' : 'border-gray-200' }}">
+            <div x-show="!editing" class="flex items-center gap-3">
+                <div class="flex-1">
+                    <span class="font-medium text-navy text-sm">{{ $sy->label }}</span>
+                    @if($isCurrent)
+                    <span class="ml-2 text-[10px] font-semibold bg-brand/20 text-brand rounded px-1.5 py-0.5 uppercase tracking-wide">Current</span>
+                    @elseif($sy->start_date->gt(today()))
+                    <span class="ml-2 text-[10px] font-semibold bg-amber/20 text-amber-700 rounded px-1.5 py-0.5 uppercase tracking-wide">Upcoming</span>
+                    @else
+                    <span class="ml-2 text-[10px] font-semibold bg-gray-100 text-gray-400 rounded px-1.5 py-0.5 uppercase tracking-wide">Past</span>
+                    @endif
+                    <p class="text-xs text-gray-500 mt-0.5">
+                        {{ $sy->start_date->format('d M Y') }} — {{ $sy->end_date->format('d M Y') }}
+                    </p>
+                </div>
+                <button @click="editing = true" class="text-xs text-gray-400 hover:text-navy">Edit</button>
+                <form method="POST" action="{{ route('admin.calendar.school-years.destroy', $sy) }}" onsubmit="return confirm('Remove this school year?')">
+                    @csrf @method('DELETE')
+                    <button type="submit" class="text-xs text-red-400 hover:text-red-600">Remove</button>
+                </form>
+            </div>
+            <form x-show="editing" method="POST" action="{{ route('admin.calendar.school-years.update', $sy) }}" class="space-y-3">
+                @csrf @method('PUT')
+                <div class="grid grid-cols-3 gap-3">
+                    <div>
+                        <label class="label">Label</label>
+                        <input type="text" name="label" value="{{ $sy->label }}" class="input w-full" required>
+                    </div>
+                    <div>
+                        <label class="label">Start date</label>
+                        <input type="date" name="start_date" value="{{ $sy->start_date->format('Y-m-d') }}" class="input w-full" required>
+                    </div>
+                    <div>
+                        <label class="label">End date</label>
+                        <input type="date" name="end_date" value="{{ $sy->end_date->format('Y-m-d') }}" class="input w-full" required>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                    <button type="button" @click="editing = false" class="btn btn-outline btn-sm">Cancel</button>
+                </div>
+            </form>
+        </div>
+        @endforeach
+    </div>
+    @endif
+
+    {{-- Add new year --}}
+    <div x-data="{ open: {{ $schoolYears->isEmpty() ? 'true' : 'false' }} }">
+        <button @click="open = !open" class="btn btn-outline btn-sm flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            Add school year
+        </button>
+        <form x-show="open" x-cloak method="POST" action="{{ route('admin.calendar.school-years.store') }}" class="mt-4 space-y-3">
+            @csrf
+            <div class="grid grid-cols-3 gap-3 max-w-lg">
+                <div>
+                    <label class="label">Label</label>
+                    <input type="text" name="label" class="input w-full" placeholder="e.g. 2027" required>
+                </div>
+                <div>
+                    <label class="label">Start date</label>
+                    <input type="date" name="start_date" class="input w-full" required>
+                </div>
+                <div>
+                    <label class="label">End date</label>
+                    <input type="date" name="end_date" class="input w-full" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm">Add year</button>
+        </form>
+    </div>
+</div>
+
+{{-- Off-Day Reminder Message Settings --}}
+<div class="card">
+    <h2 class="text-base font-semibold text-navy mb-1">Off-Day Reminder Message</h2>
+    <p class="text-sm text-gray-500 mb-5">
+        Automatically sends an in-app message to enrolled handlers before a cancelled class day.
+        The message content is managed via the inbox message template.
+        Available placeholders: <code class="text-xs bg-stone/30 px-1 rounded">@{{handler_name}}</code>
+        <code class="text-xs bg-stone/30 px-1 rounded">@{{dog_name}}</code>
+        <code class="text-xs bg-stone/30 px-1 rounded">@{{class_name}}</code>
+        <code class="text-xs bg-stone/30 px-1 rounded">@{{off_date}}</code>
+        <code class="text-xs bg-stone/30 px-1 rounded">@{{off_reason}}</code>
+        <code class="text-xs bg-stone/30 px-1 rounded">@{{next_class_date}}</code>
+    </p>
+
+    @if($reminderTemplate)
+    <a href="{{ route('admin.inbox.templates.edit', $reminderTemplate) }}"
+        class="inline-flex items-center gap-2 btn btn-secondary mb-6">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125" /></svg>
+        Edit reminder message template
+    </a>
+    @endif
+
+    <form action="{{ route('admin.calendar.settings.save') }}" method="POST" class="space-y-4">
         @csrf
-        <div>
-            <label class="label">Subject line</label>
-            <input type="text" name="settings[off_day_email_subject]"
-                value="{{ $settings['off_day_email_subject'] ?? '' }}"
-                placeholder="e.g. No class on {off_date} – {off_reason}"
-                class="input w-full max-w-xl">
-        </div>
-        <div>
-            <label class="label">Email body</label>
-            <textarea name="settings[off_day_email_body]" rows="7"
-                placeholder="Hi {handler_name}, just a quick reminder that there is no class for {dog_name} ({class_name}) on {off_date} due to {off_reason}. Your next class is on {next_class_date}. See you then!"
-                class="input w-full max-w-xl font-mono text-sm">{{ $settings['off_day_email_body'] ?? '' }}</textarea>
-        </div>
         <div>
             <label class="label">Send reminder how many days before the cancelled class</label>
             <div class="flex items-center gap-3">
-                <input type="number" name="settings[off_day_reminder_days]" min="1" max="14"
-                    value="{{ $settings['off_day_reminder_days'] ?? 3 }}"
+                <input type="number" name="off_day_reminder_days" min="1" max="14"
+                    value="{{ $reminderDays }}"
                     class="input w-24">
                 <span class="text-sm text-gray-500">days before the off day</span>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Save Email Settings</button>
+        <button type="submit" class="btn btn-primary">Save</button>
     </form>
 </div>
 

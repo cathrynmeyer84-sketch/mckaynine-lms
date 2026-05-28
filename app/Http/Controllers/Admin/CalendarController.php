@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\{AppSetting, CalendarDay, DogClass, ClassDate};
+use App\Models\{AppSetting, CalendarDay, DogClass, ClassDate, SchoolYear};
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
@@ -55,11 +55,11 @@ class CalendarController extends Controller
             ];
         }
 
-        $settings = AppSetting::whereIn('key', ['off_day_email_subject', 'off_day_email_body', 'off_day_reminder_days'])
-            ->pluck('value', 'key')
-            ->toArray();
+        $reminderDays     = (int) AppSetting::get('off_day_reminder_days', '3');
+        $reminderTemplate = \App\Models\MessageTemplate::where('slug', 'off_week_reminder')->first();
+        $schoolYears      = SchoolYear::orderBy('start_date')->get();
 
-        return view('admin.calendar.index', compact('year', 'months', 'settings'));
+        return view('admin.calendar.index', compact('year', 'months', 'reminderDays', 'reminderTemplate', 'schoolYears'));
     }
 
     public function saveDay(Request $request)
@@ -102,10 +102,40 @@ class CalendarController extends Controller
 
     public function saveSettings(Request $request)
     {
-        foreach (['off_day_email_subject', 'off_day_email_body', 'off_day_reminder_days'] as $key) {
-            AppSetting::set($key, $request->input("settings.$key") ?: null);
-        }
+        AppSetting::set('off_day_reminder_days', $request->input('off_day_reminder_days') ?: '3');
         return back()->with('success', 'Settings saved.');
+    }
+
+    public function storeSchoolYear(Request $request)
+    {
+        $request->validate([
+            'label'      => 'required|string|max:50',
+            'start_date' => 'required|date',
+            'end_date'   => 'required|date|after:start_date',
+        ]);
+
+        SchoolYear::create($request->only('label', 'start_date', 'end_date'));
+
+        return back()->with('success', 'School year added.');
+    }
+
+    public function updateSchoolYear(Request $request, SchoolYear $schoolYear)
+    {
+        $request->validate([
+            'label'      => 'required|string|max:50',
+            'start_date' => 'required|date',
+            'end_date'   => 'required|date|after:start_date',
+        ]);
+
+        $schoolYear->update($request->only('label', 'start_date', 'end_date'));
+
+        return back()->with('success', 'School year updated.');
+    }
+
+    public function destroySchoolYear(SchoolYear $schoolYear)
+    {
+        $schoolYear->delete();
+        return back()->with('success', 'School year removed.');
     }
 
     // ── Helpers ──────────────────────────────────────────────────────────────
