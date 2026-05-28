@@ -1,0 +1,93 @@
+[
+    {
+        "key": "enrolment_confirmed",
+        "name": "Enrolment Confirmed",
+        "subject": "Welcome to McKaynine — your enrolment is confirmed!",
+        "body": "Hi {handler_name},\n\nGreat news! Your enrolment for {dog_name} in {class_name} has been confirmed.\n\n{class_fee}\n\nHere's what to do next:\n\n1. Download our app (PWA): {pwa_link}\n\n2. Set up your account password: {password_setup_link}\n\n3. Once you're in, please upload a photo of {dog_name} to complete your profile.\n\n4. Enable push notifications in the app so you don't miss any updates about your class.\n\nYour class information will be sent through the app each week.\n\nIf you have any questions, please don't hesitate to get in touch.\n\nSee you at class!\nThe McKaynine Team",
+        "available_placeholders": "{handler_name}, {dog_name}, {class_name}, {password_setup_link}, {pwa_link}"
+    },
+    {
+        "key": "vet_clearance_request",
+        "name": "Vet Clearance Certificate Request",
+        "subject": "Action required: Vet clearance certificate for {dog_name}",
+        "body": "Hi {handler_name},\n\nThank you for enrolling {dog_name} in {class_name}.\n\nBefore we can confirm your spot, we require a vet clearance certificate for {dog_name}.\n\nPlease follow these steps:\n\n1. Download the vet clearance form: {vet_clearance_pdf_link}\n2. Take it to your vet to complete and sign.\n3. Upload the completed certificate here: {upload_link}\n\nOnce we've received and reviewed the certificate, we'll confirm your enrolment.\n\nIf you have any questions, please get in touch.\n\nKind regards,\nThe McKaynine Team",
+        "available_placeholders": "{handler_name}, {dog_name}, {class_name}, {vet_clearance_pdf_link}, {upload_link}"
+    },
+    {
+        "key": "enrolment_rejected",
+        "name": "Enrolment Not Accepted",
+        "subject": "Update on your enrolment for {dog_name}",
+        "body": "Hi {handler_name},\n\nThank you for your interest in enrolling {dog_name} in {class_name}.\n\nUnfortunately, after reviewing your application, we are unable to accept this enrolment at this time.\n\n{reason}\n\nWe appreciate your understanding. If you'd like to discuss this further or explore other options, please feel free to contact us.\n\nKind regards,\nThe McKaynine Team",
+        "available_placeholders": "{handler_name}, {dog_name}, {class_name}, {reason}"
+    },
+    {
+        "key": "class_assigned",
+        "name": "Class Assigned",
+        "subject": "Your class is confirmed — here are your details, {handler_name}!",
+        "body": "Hi {handler_name},\n\nGreat news! {dog_name} has been placed in {class_name}.\n\nBelow are your class dates. Please save these — we look forward to seeing you and {dog_name} there!\n\nIf you haven't set up your account yet, you can do so via the link in your welcome email. Once you're in, you'll be able to view class updates, weekly content, and resources directly in the app.\n\nIf you have any questions, don't hesitate to get in touch.\n\nSee you at class!\nThe McKaynine Team",
+        "available_placeholders": "{handler_name}, {dog_name}, {class_name}, {class_location}"
+    },
+    {
+        "key": "assessment_booking_invite",
+        "name": "Assessment Booking Invite",
+        "subject": "Book Your Assessment — {dog_name}",
+        "body": "Hi {handler_name},\n\nThank you for submitting your assessment questionnaire for {dog_name}. We've reviewed your form and everything looks great — we're ready to schedule your assessment.\n\nPlease use the link below to choose a date and time that works for you:\n\n{booking_url}\n\nThis link is personalised for you — please don't share it.\n\nLooking forward to meeting you and {dog_name}!\n\nThe McKaynine Team",
+        "available_placeholders": "{handler_name}, {dog_name}, {booking_url}"
+    },
+    {
+        "key": "assessment_confirmed",
+        "name": "Assessment Booking Confirmed",
+        "subject": "Assessment Confirmed — {dog_name}",
+        "body": "Hi {handler_name},\n\nYour assessment for {dog_name} is confirmed. We look forward to meeting you both!\n\nDate: {date}\nTime: {time}\nLocation: {location}\n\nA few things to bring:\n- Your dog on a properly fitted collar or harness and leash\n- High-value treats your dog loves\n- Your vaccination card (if not already submitted)\n\nSee you soon!\n\nThe McKaynine Team",
+        "available_placeholders": "{handler_name}, {dog_name}, {date}, {time}, {location}"
+    },
+    {
+        "key": "assessment_reminder",
+        "name": "Assessment Reminder",
+        "subject": "Reminder: Assessment Tomorrow — {dog_name}",
+        "body": "Hi {handler_name},\n\nJust a reminder that {dog_name}'s assessment is tomorrow!\n\nDate: {date}\nTime: {time}\nLocation: {location}\n\nRemember to bring:\n- Your dog on a properly fitted collar or harness and leash\n- High-value treats your dog loves\n- Your vaccination card (if not already submitted)\n\nSee you tomorrow!\n\nThe McKaynine Team",
+        "available_placeholders": "{handler_name}, {dog_name}, {date}, {time}, {location}"
+    },
+    {
+        "key": "assessment_outcome_group",
+        "name": "Assessment Outcome — Group Classes",
+        "subject": "Great News — {dog_name} is Ready for Group Classes!",
+        "body": "<p>Hi {handler_name},<\/p><p>We have great news! After reviewing {dog_name}'s assessment, we're pleased to let you know that {dog_name} is ready to join our group training classes.<\/p><p>We just need a bit more info to get {dog_name} added to our system before we confirm your class.<\/p><p>{enrol_url}<\/p><p>The McKaynine Team<\/p>",
+        "available_placeholders": "{handler_name}, {dog_name}, {enrol_url}"
+    },
+    {
+        "key": "assessment_outcome_private",
+        "name": "Assessment Outcome — Private Lessons",
+        "subject": "Your Assessment Outcome — Private Lessons Recommended",
+        "body": "Hi {handler_name},\n\nThank you for bringing {dog_name} in for their assessment. After careful evaluation, we believe {dog_name} would benefit most from private one-on-one lessons before joining a group class.\n\nThis is not a reflection of anything wrong — it simply means {dog_name} will get more focused attention and progress faster with individualised sessions.\n\nClick the link below to get started. You'll fill in a couple of quick details, create your McKaynine account, and then choose a time for your first lesson — all in one go.\n\n{private_lesson_url}\n\nWe look forward to working with you and {dog_name}!\n\nThe McKaynine Team",
+        "available_placeholders": "{handler_name}, {dog_name}"
+    },
+    {
+        "key": "assessment_outcome_behaviourist",
+        "name": "Assessment Outcome — Behaviourist Referral",
+        "subject": "Your Assessment Outcome — Next Steps",
+        "body": "Hi {handler_name},\n\nThank you for bringing {dog_name} in for their assessment. After careful evaluation, we feel that {dog_name} would benefit from working with a certified animal behaviourist before joining our training programme.\n\nWe want to set you and {dog_name} up for the best possible experience, and a behaviourist will be able to provide the specialised support needed right now.\n\nWe'll follow up with some recommended contacts. Please don't hesitate to reach out if you have any questions.\n\nThe McKaynine Team",
+        "available_placeholders": "{handler_name}, {dog_name}"
+    },
+    {
+        "key": "off_week_reminder",
+        "name": "Off Week Reminder",
+        "subject": "No class on {off_date} — {off_reason}",
+        "body": "Hi {handler_name},\n\nJust a quick reminder that there is no class for {dog_name} ({class_name}) on {off_date} due to {off_reason}.\n\nYour next class is on {next_class_date}. See you then!\n\nThe McKaynine Team",
+        "available_placeholders": "{handler_name}, {dog_name}, {class_name}, {off_date}, {off_reason}, {next_class_date}"
+    },
+    {
+        "key": "assessment_class_confirmed",
+        "name": "Assessment — Class Confirmed",
+        "subject": "You're in! {dog_name} is confirmed for {class_name}",
+        "body": "Hi {handler_name},\n\nGreat news — {dog_name} has been placed in {class_name}.\n\nBelow are your class details. Please save these — we look forward to seeing you and {dog_name} there!\n\nOnce you're logged into the app, you'll be able to view class updates, weekly content, and resources.\n\nIf you have any questions, don't hesitate to get in touch.\n\nSee you at class!\nThe McKaynine Team",
+        "available_placeholders": "{handler_name}, {dog_name}, {class_name}, {password_setup_link}, {pwa_link}"
+    },
+    {
+        "key": "assessment_enrolment_confirmed",
+        "name": "Assessment Graduate — Enrolment Confirmed",
+        "subject": "Welcome to McKaynine — your enrolment is confirmed!",
+        "body": "<p>Hi {handler_name},<\/p>\n\n<p>Great news — your enrolment for {dog_name} has been confirmed and we're looking forward to seeing you in class!<\/p>\n\n<p>Based on {dog_name}'s assessment, we recommend the following classes:<\/p>\n\n{recommended_classes}\n\n<p>Once you've set up your account, you'll be able to browse these classes in the app and let us know your preference. We'll then confirm your placement and send through all the class details.<\/p>\n\n<p><strong>Here's what to do next:<\/strong><\/p>\n\n<p>1. Set up your account password: {password_setup_link}<\/p>\n\n<p>2. Once you're in, please upload a photo of {dog_name} to complete your profile.<\/p>\n\n<p>3. Enable push notifications so you don't miss any class updates.<\/p>\n\n<p>If you have any questions, please don't hesitate to get in touch.<\/p>\n\n<p>See you at class!<br>The McKaynine Team<\/p>",
+        "available_placeholders": null
+    }
+]
