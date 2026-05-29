@@ -9,9 +9,8 @@ use Illuminate\Database\Seeder;
 class PuppyBriefingSeeder extends Seeder
 {
     /**
-     * Seed instructor briefing items for Puppy Class weeks 2–6.
-     * Week 1 is already populated. This seeder is safe to re-run —
-     * it clears and rebuilds weeks 2–6 only.
+     * Seed instructor briefing items for Puppy Class weeks 1–6.
+     * Safe to re-run — clears and rebuilds all weeks.
      */
     public function run(): void
     {
@@ -22,6 +21,221 @@ class PuppyBriefingSeeder extends Seeder
             ->keyBy('week_number');
 
         $data = [
+
+            // ─────────────────────────────────────────────────────────────
+            // WEEK 1
+            // ─────────────────────────────────────────────────────────────
+            1 => [
+                [
+                    'exercise_name' => 'Welcome',
+                    'suggested_time' => '10 minutes',
+                    'sort_order' => 0,
+                    'description' => "First impressions matter — set the tone for a fun, positive, safe class.
+
+REGISTER & INTRODUCTIONS
+- Welcome each handler by name as they arrive
+- Introduce yourself and any assistants
+- Ask handlers to introduce themselves and their pup (name, breed, age)
+
+RULES
+- Only positive reinforcement in class — no corrections, collar jerks, or punishment
+- All pups go into the pen when not being worked
+- No pup-to-pup greetings on lead (sets up frustration)
+- Off-lead play is managed and structured — not a free-for-all
+- Treats: soft, small (pea-sized), bring lots
+- Vaccination requirement reminder
+
+CLASS STRUCTURE
+- Explain the lesson format: theory, pen zen, settling, exercises, obstacles, play
+- Total class time: 50–55 minutes
+- Remind: short home practice sessions daily (5 min) beat one long session weekly",
+                ],
+                [
+                    'exercise_name' => 'Theory: 3 Categories to Socialise To',
+                    'suggested_time' => '10 minutes',
+                    'sort_order' => 1,
+                    'description' => "The critical socialisation window closes at approximately 12–16 weeks — this is the most important thing handlers will learn today.
+
+THE 3 CATEGORIES
+1. PEOPLE — men, women, children, elderly, hats, glasses, uniforms, beards, prams, mobility aids, different ethnicities
+2. STUFF — surfaces (grass, gravel, tiles, metal grating), sounds, vehicles, umbrellas, plastic bags, loud noises, thunderstorms
+3. DOGS — vaccinated, calm adult dogs; other puppies in controlled settings; different sizes and breeds
+
+HOW TO SOCIALISE CORRECTLY
+- Exposure alone is NOT enough — the pup must feel safe and have a positive experience
+- Let the pup approach on their own terms — don't force
+- Watch body language: loose, waggy = good; tucked tail, ears back, freezing = overwhelmed
+- Treat generously during new exposures — association is everything
+- Short, frequent, positive sessions beat one big overwhelming trip
+
+THE WINDOW IS CLOSING
+- Emphasise urgency: once the window closes, new things become much harder to accept
+- Homework: every day this week, introduce something from each of the 3 categories",
+                ],
+                [
+                    'exercise_name' => 'Pen Zen',
+                    'suggested_time' => '5 minutes',
+                    'sort_order' => 2,
+                    'description' => "Week 1: building the foundation for calm independence.
+
+SETUP
+- Pup goes into pen, owner stands immediately next to pen
+- Drop treats onto the floor of the pen periodically (every 10–15 seconds)
+- Pup should be kept calm and busy — not barking, whining, or pawing at the fence
+
+PURPOSE
+- Teaches pup that being separated from owner = treats appear
+- Foundation for building independence and preventing separation anxiety
+- Owner learns to observe pup calmly instead of constantly interacting
+
+If using multiple pens: have an assistant move pens closer together or apart as needed during theory talk.
+Owner should stand still at this stage — no walking around yet.",
+                ],
+                [
+                    'exercise_name' => 'Settling: Scatter Treats on Mat',
+                    'suggested_time' => '5 minutes',
+                    'sort_order' => 3,
+                    'description' => "Week 1: No cue yet — just building a positive association with the mat.
+
+HOW
+1. Place mat or towel on the floor in front of handler
+2. Scatter a small handful of treats directly onto the mat
+3. Allow pup to sniff and eat treats off the mat
+4. Repeat 2–3 times
+
+NO LURING — do not guide the pup onto the mat with a treat in your hand.
+NO VERBAL — no cues, no encouragement, no \"good boy/girl\" yet.
+
+PURPOSE
+- Pup starts to associate the mat with good things appearing
+- Calmness is naturally reinforced as pup sniffs and eats
+- Builds the foundation for a cued settle in later weeks
+
+Note: some pups will be too excited to settle — that's fine for week 1. Keep treats small and scatter widely so pup has to sniff and work for them.",
+                ],
+                [
+                    'exercise_name' => 'Exercise: Auto Sit / Focus',
+                    'suggested_time' => '5 minutes',
+                    'sort_order' => 4,
+                    'description' => "Goal: pup learns that sitting and making eye contact with the handler is the default behaviour that pays off.
+
+HOW
+1. Handler holds 4 treats in a closed fist at waist height
+2. Give ONE treat as a freebie to let pup know treats are available
+3. Hands on belly — stand still and wait
+4. The moment pup offers a sit AND looks up at handler → jackpot (3 treats, one by one)
+5. Reset and repeat
+
+COMMON MISTAKES
+- Luring the sit with the treat — the pup must offer it
+- Marking before the eye contact comes
+- Moving around — handler must be still so pup has to figure out what works
+
+This exercise teaches: sitting and checking in with you is always worth it. Foundation for focus in distracting environments later.",
+                ],
+                [
+                    'exercise_name' => 'Exercise: Recall Basics',
+                    'suggested_time' => '5 minutes',
+                    'sort_order' => 5,
+                    'description' => "A reliable recall is one of the most important safety skills a dog will ever learn — start it right.
+
+HOW
+1. Handler crouches down (get low — less threatening, more inviting)
+2. Use a high, excited voice: \"Puppy, come!\" — one call only
+3. Open arms, pat legs, be irresistible
+4. When pup arrives: jackpot reward + big celebration
+5. Never grab the collar first — touch collar, then treat
+
+CRITICAL RULES
+- Never call a pup for something unpleasant (bath, nail trim, crate) — go and get them instead
+- Never punish a pup that takes a long time to come — they came eventually, reward it
+- The recall cue should predict the best thing in the world
+
+PRACTICE THIS WEEK
+- Call pup from another room using recall cue
+- Recall at meal times — pup comes to you, gets fed
+- Keep it easy and rewarding — don't test it in distracting environments yet",
+                ],
+                [
+                    'exercise_name' => 'Exercise: Loose Lead Basics',
+                    'suggested_time' => '5 minutes',
+                    'sort_order' => 6,
+                    'description' => "Introduce the concept only — don't expect mastery in week 1.
+
+SETUP
+- Lead in right hand, looped over thumb
+- Treats in left hand
+- Hold treat at pup's nose level on your left side
+
+HOW
+1. Place treat on pup's nose, take 3 steps forward
+2. Pup walks with you → reward after 3 steps
+3. If pup pulls: stop completely — do not move forward while the lead is tight
+4. Wait for pup to return to your side → reward and move again
+
+KEY MESSAGE TO HANDLERS
+- Pulling works if it gets the pup to the thing they want — so it must NEVER work
+- Every step forward on a tight lead teaches the pup that pulling is the right strategy
+- Be consistent — every single walk, not just in class
+
+Flat collar for class (no harnesses that allow forward pull at this stage).",
+                ],
+                [
+                    'exercise_name' => 'Off-Lead Play',
+                    'suggested_time' => '10 minutes',
+                    'sort_order' => 7,
+                    'description' => "Play is a critical part of socialisation — but managed play, not chaos.
+
+BRIEF HANDLERS BEFORE RELEASING
+- Everyone stand up (no sitting — harder to intervene)
+- We are responsible for keeping play positive — watch your pup
+- Allow pups to greet naturally but interrupt mounting, bullying, or any pup that is overwhelmed
+- Call your pup back regularly during play and reward — then release again (recall practice!)
+- Loud yelping or pup trying to escape = intervention needed immediately
+
+PLAY SIGNALS TO WATCH FOR (GOOD)
+- Play bow (front end down, back end up)
+- Bouncy, loose movement
+- Taking turns chasing
+
+SIGNALS TO INTERRUPT (NOT GOOD)
+- One pup always on top / always chasing
+- Yelping without recovery
+- Pup hiding behind owner or trying to escape
+- Stiff body, hard stare, raised hackles
+
+Keep sessions to max 5 minutes — pups tire and overstimulation leads to snapping.",
+                ],
+                [
+                    'exercise_name' => 'Obstacles: Introduction (5 min)',
+                    'suggested_time' => '5 minutes',
+                    'sort_order' => 8,
+                    'description' => "Week 1 obstacles are brief — time may be very limited. Fill remaining time only.
+
+INTRODUCE ONE OR TWO OBSTACLES ONLY
+- Choose the least intimidating equipment available
+- Let pups investigate obstacles from a distance first
+- Lure pup onto/through gently with treats — never force
+- Mark and reward any brave interaction
+
+SUGGESTIONS FOR WEEK 1
+- Ramp at ground level (flat) — let pup walk across
+- Tunnel at widest, shortest setting — lure with treat just visible inside
+- Low platform — lure front feet on, reward
+
+Keep the energy calm and positive. Week 1 is about making the obstacles feel safe and fun, not about performance.
+
+Note: Full obstacle time (15 min) begins from Week 2.",
+                ],
+                [
+                    'exercise_name' => 'Bring From Home Next Week: Hat',
+                    'suggested_time' => null,
+                    'sort_order' => 9,
+                    'description' => "Remind all handlers at the end of class:
+
+\"Next week, please bring a hat from home — any hat: baseball cap, sun hat, beanie, hard hat, anything. We'll be using it for socialisation to items worn on the head.\"",
+                ],
+            ],
 
             // ─────────────────────────────────────────────────────────────
             // WEEK 2
