@@ -8,6 +8,8 @@ $isLoggedIn = auth()->check();
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Enquire — {{ $classType->name }}</title>
+    <link rel="icon" type="image/png" href="/icons/logo%20round.png">
+    <link rel="apple-touch-icon" href="/icons/logo%20round.png">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         body { margin:0; padding:0; background:#e5e7eb; font-family:'Figtree','Nunito Sans','Helvetica Neue',Arial,sans-serif; }

@@ -36,6 +36,8 @@ $ink900    = '#404040';
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $class->name }} — McKaynine</title>
+    <link rel="icon" type="image/png" href="/icons/logo%20round.png">
+    <link rel="apple-touch-icon" href="/icons/logo%20round.png">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         * { box-sizing: border-box; }

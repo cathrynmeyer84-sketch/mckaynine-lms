@@ -12,6 +12,8 @@ $enquireUrl = route('class-info.enquire', $classType->slug);
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $classType->name }} — McKaynine</title>
+    <link rel="icon" type="image/png" href="/icons/logo%20round.png">
+    <link rel="apple-touch-icon" href="/icons/logo%20round.png">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-gray-100 font-sans">

@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $branch->branch_name ?? 'McKaynine Dog School' }}</title>
+    <link rel="icon" type="image/png" href="/icons/logo%20round.png">
+    <link rel="apple-touch-icon" href="/icons/logo%20round.png">
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#1A1D2E">
     <link rel="preconnect" href="https://fonts.googleapis.com">

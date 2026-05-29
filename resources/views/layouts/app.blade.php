@@ -7,8 +7,9 @@
     <meta name="theme-color" content="#001d6d">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="icon" type="image/png" href="/icons/logo%20round.png">
+    <link rel="apple-touch-icon" href="/icons/logo%20round.png">
     <link rel="manifest" href="/manifest.json">
-    <link rel="apple-touch-icon" href="/images/icons/icon-192x192.png">
 
     <title>{{ config('app.name', 'McKaynine LMS') }} @isset($title) — {{ $title }} @endisset @hasSection('title') — @yield('title') @endif</title>
 
