@@ -258,6 +258,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
         // Invitations
         Route::get('/invitations', [Admin\InvitationController::class, 'index'])->name('invitations.index');
         Route::post('/invitations', [Admin\InvitationController::class, 'store'])->name('invitations.store');
+        Route::post('/invitations/csv', [Admin\InvitationController::class, 'storeCsv'])->name('invitations.csv');
+        Route::get('/invitations/sample-csv', [Admin\InvitationController::class, 'sampleCsv'])->name('invitations.sample-csv');
         Route::post('/invitations/{invitation}/resend', [Admin\InvitationController::class, 'resend'])->name('invitations.resend');
         Route::delete('/invitations/{invitation}', [Admin\InvitationController::class, 'destroy'])->name('invitations.destroy');
 

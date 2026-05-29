@@ -16,6 +16,40 @@
 <div class="alert alert-success">{{ session('success') }}</div>
 @endif
 
+{{-- CSV results --}}
+@if(session('csv_sent') && count(session('csv_sent')))
+<div class="card !p-0 overflow-hidden">
+    <div class="px-4 py-3 bg-green-50 border-b border-green-100 flex items-center gap-2">
+        <svg class="w-4 h-4 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <p class="text-sm font-semibold text-green-800">{{ count(session('csv_sent')) }} invitation{{ count(session('csv_sent')) !== 1 ? 's' : '' }} sent</p>
+    </div>
+    <ul class="divide-y divide-gray-100 max-h-48 overflow-y-auto">
+        @foreach(session('csv_sent') as $email)
+        <li class="px-4 py-2 text-sm text-gray-700">{{ $email }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
+
+@if(session('csv_skipped') && count(session('csv_skipped')))
+<div class="card !p-0 overflow-hidden">
+    <div class="px-4 py-3 bg-amber-50 border-b border-amber-100 flex items-center gap-2">
+        <svg class="w-4 h-4 text-amber-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <p class="text-sm font-semibold text-amber-800">{{ count(session('csv_skipped')) }} row{{ count(session('csv_skipped')) !== 1 ? 's' : '' }} skipped</p>
+    </div>
+    <table class="w-full text-sm">
+        <tbody class="divide-y divide-gray-100">
+            @foreach(session('csv_skipped') as $item)
+            <tr>
+                <td class="px-4 py-2 text-gray-700">{{ $item['value'] }}</td>
+                <td class="px-4 py-2 text-amber-600">{{ $item['reason'] }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+@endif
+
 {{-- Send invitation --}}
 <div class="card">
     <h2 class="text-sm font-semibold text-navy mb-1">Send an Invitation</h2>
@@ -51,6 +85,56 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                 </svg>
                 Send Invite
+            </button>
+        </div>
+    </form>
+</div>
+
+{{-- CSV batch upload --}}
+<div class="card"
+     x-data="{ fileName: '' }">
+    <div class="flex items-start justify-between gap-4 mb-1">
+        <div>
+            <h2 class="text-sm font-semibold text-navy">Batch Upload via CSV</h2>
+            <p class="text-xs text-gray-500 mt-0.5">
+                Upload a CSV file with one student per row. Two columns: <code class="bg-gray-100 rounded px-1 font-mono">email</code> and <code class="bg-gray-100 rounded px-1 font-mono">name</code> (name is optional).
+                A header row is detected automatically.
+            </p>
+        </div>
+        <a href="{{ route('admin.invitations.sample-csv') }}"
+           class="btn btn-sm btn-outline whitespace-nowrap flex-shrink-0">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            Sample CSV
+        </a>
+    </div>
+
+    <form method="POST" action="{{ route('admin.invitations.csv') }}"
+          enctype="multipart/form-data"
+          class="mt-4 flex flex-col sm:flex-row gap-3 items-start">
+        @csrf
+
+        <div class="flex-1 min-w-0">
+            <label
+                class="flex items-center gap-3 border border-dashed border-gray-300 rounded-lg px-4 py-3 cursor-pointer hover:border-brand hover:bg-brand/5 transition-colors"
+                @click="$refs.csvInput.click()">
+                <svg class="w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+                <span class="text-sm text-gray-500" x-text="fileName || 'Choose CSV file…'"></span>
+            </label>
+            <input type="file" name="csv_file" accept=".csv,text/csv"
+                   x-ref="csvInput" class="hidden"
+                   @change="fileName = $event.target.files[0]?.name || ''">
+            @error('csv_file')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
+        </div>
+
+        <div class="sm:mt-0">
+            <button type="submit" class="btn btn-primary whitespace-nowrap"
+                    :disabled="!fileName">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                </svg>
+                Send All
             </button>
         </div>
     </form>
