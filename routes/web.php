@@ -255,6 +255,12 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
         Route::post('/documents', [Admin\DocumentLibraryController::class, 'store'])->name('documents.store');
         Route::delete('/documents/{document}', [Admin\DocumentLibraryController::class, 'destroy'])->name('documents.destroy');
 
+        // Invitations
+        Route::get('/invitations', [Admin\InvitationController::class, 'index'])->name('invitations.index');
+        Route::post('/invitations', [Admin\InvitationController::class, 'store'])->name('invitations.store');
+        Route::post('/invitations/{invitation}/resend', [Admin\InvitationController::class, 'resend'])->name('invitations.resend');
+        Route::delete('/invitations/{invitation}', [Admin\InvitationController::class, 'destroy'])->name('invitations.destroy');
+
     }); // end super_admin
 
 });
@@ -405,5 +411,10 @@ Route::get('/vet-clearance-form.pdf', function () {
     }
     abort(404, 'Vet clearance form not uploaded yet. Please contact McKaynine directly.');
 })->name('vet-clearance.pdf');
+
+// ── Invitation sign-up (public, no auth required) ─────────────
+use App\Http\Controllers\InvitationRegisterController;
+Route::get('/invite/{token}', [InvitationRegisterController::class, 'show'])->name('invitation.register');
+Route::post('/invite/{token}', [InvitationRegisterController::class, 'store'])->name('invitation.register.store');
 
 require __DIR__.'/auth.php';
