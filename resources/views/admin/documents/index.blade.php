@@ -52,7 +52,7 @@
         @error('files.*')<p class="text-xs text-red-500 mt-2">{{ $message }}</p>@enderror
 
         <div x-show="files.length > 0" x-cloak class="mt-3 flex justify-end">
-            <button type="submit" class="btn btn-primary">Upload {{ '{{ files.length }}' }} file(s)</button>
+            <button type="submit" class="btn btn-primary">Upload @{{ files.length }} file(s)</button>
         </div>
     </form>
 </div>
