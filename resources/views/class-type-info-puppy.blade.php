@@ -412,7 +412,7 @@ $branch       = \App\Models\BranchSetting::current();
         @php
             $renderLinks = fn(string $text): string => preg_replace_callback(
                 '/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/',
-                fn($m) => '<a href="' . e($m[2]) . '" style="color:' . $blue700 . ';text-decoration:underline;font-weight:600;" target="_blank" rel="noopener">' . e($m[1]) . '</a>',
+                fn($m) => '<a href="' . e($m[2]) . '" style="color:#3569BD;text-decoration:underline;font-weight:600;" target="_blank" rel="noopener">' . e($m[1]) . '</a>',
                 e($text)
             );
         @endphp
