@@ -78,7 +78,23 @@
         </thead>
         <tbody class="divide-y divide-gray-100">
             @foreach($documents as $doc)
-            <tr class="hover:bg-gray-50 transition-colors" x-data="{ copied: false }">
+            <tr class="hover:bg-gray-50 transition-colors" x-data="{
+                copied: false,
+                docUrl: '{{ addslashes($doc->url) }}',
+                copyUrl() {
+                    if (navigator.clipboard) {
+                        navigator.clipboard.writeText(this.docUrl).then(() => { this.copied = true; setTimeout(() => this.copied = false, 2000); });
+                    } else {
+                        const el = document.createElement('textarea');
+                        el.value = this.docUrl;
+                        el.style.position = 'fixed'; el.style.opacity = '0';
+                        document.body.appendChild(el); el.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(el);
+                        this.copied = true; setTimeout(() => this.copied = false, 2000);
+                    }
+                }
+            }">
                 <td class="px-4 py-3">
                     <div class="flex items-center gap-3">
                         @php
@@ -105,7 +121,7 @@
                 <td class="px-4 py-3">
                     <div class="flex items-center gap-2 justify-end">
                         <button type="button"
-                            @click="navigator.clipboard.writeText('{{ $doc->url }}'); copied = true; setTimeout(() => copied = false, 2000)"
+                            @click="copyUrl()"
                             :class="copied ? 'border-green-300 bg-green-50 text-green-700' : 'border-gray-200 bg-white text-gray-600 hover:bg-gray-50'"
                             class="btn btn-sm border transition-colors whitespace-nowrap">
                             <span x-show="!copied">Copy link</span>
