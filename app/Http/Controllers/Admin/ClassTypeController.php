@@ -397,6 +397,7 @@ class ClassTypeController extends Controller
             'image_mobile'         => 'nullable|image|max:10240',
             'testimonial_photo'    => 'nullable|image|max:5120',
             'gallery_add.*'        => 'nullable|image|max:10240',
+            'documents_add.*'      => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,txt|max:20480',
             'individual_class_pages' => 'boolean',
             'trust_strap'           => 'nullable|string',
             'helps_with'            => 'nullable|string',
@@ -478,6 +479,22 @@ class ClassTypeController extends Controller
             }
         }
         $update['gallery_images'] = $existing;
+
+        // Documents: keep checked, append new uploads
+        $existingDocs = $classType->documents ?? [];
+        $keepDocs     = $request->input('keep_documents', []);
+        $existingDocs = array_values(array_filter($existingDocs, fn($d) => in_array($d['path'], $keepDocs)));
+
+        if ($request->hasFile('documents_add')) {
+            foreach ($request->file('documents_add') as $file) {
+                $path = $file->store('class-types/documents', 'public');
+                $existingDocs[] = [
+                    'name' => $file->getClientOriginalName(),
+                    'path' => $path,
+                ];
+            }
+        }
+        $update['documents'] = $existingDocs ?: null;
 
         $classType->update($update);
 

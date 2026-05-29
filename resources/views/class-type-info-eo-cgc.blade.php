@@ -371,20 +371,27 @@ $branch       = \App\Models\BranchSetting::current();
         @endif
 
         @if($classType->how_to_join_steps)
+        @php
+            $renderLinks = fn(string $text): string => preg_replace_callback(
+                '/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/',
+                fn($m) => '<a href="' . e($m[2]) . '" style="color:' . $blue700 . ';text-decoration:underline;font-weight:600;" target="_blank" rel="noopener">' . e($m[1]) . '</a>',
+                e($text)
+            );
+        @endphp
         <div>
             <p class="section-heading">How To Join</p>
             <ol style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.75rem;">
                 @foreach(array_filter(array_map('trim', explode("\n", $classType->how_to_join_steps))) as $step)
                 <li style="display:flex;gap:0.75rem;">
                     <div class="step-badge">{{ $loop->iteration }}</div>
-                    <p class="body-text" style="padding-top:0.35rem;">{{ $step }}</p>
+                    <p class="body-text" style="padding-top:0.35rem;">{!! $renderLinks($step) !!}</p>
                 </li>
                 @endforeach
             </ol>
             @if($classType->joining_notes)
             <ul style="list-style:disc;padding-left:1.1rem;margin:0.75rem 0 0;display:flex;flex-direction:column;gap:0.15rem;">
                 @foreach(array_filter(array_map('trim', explode("\n", $classType->joining_notes))) as $note)
-                <li style="font-size:0.78rem;color:{{ $ink900 }};line-height:1.4;">{{ $note }}</li>
+                <li style="font-size:0.78rem;color:{{ $ink900 }};line-height:1.4;">{!! $renderLinks($note) !!}</li>
                 @endforeach
             </ul>
             @endif
