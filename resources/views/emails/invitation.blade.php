@@ -19,9 +19,13 @@
 
     <p>Hi{{ $recipientName ? ' ' . e($recipientName) : '' }},</p>
 
-    <p>You've been invited to create your account with <strong>{{ e($schoolName) }}</strong>.</p>
+    <p>You've been invited to join <strong>{{ e($schoolName) }}</strong> as {{ $isInstructor ? 'an instructor' : 'a student' }}.</p>
 
+    @if($isInstructor)
+    <p>Click the button below to set up your instructor account. You'll be able to set your password, add a short bio, and upload a profile photo.</p>
+    @else
     <p>Click the button below to set up your profile and add your dog(s). It only takes a few minutes — once you're done, your instructor will allocate you to a class.</p>
+    @endif
 
     <div class="btn-row">
         <a href="{{ $signUpUrl }}" class="btn">Create My Account →</a>

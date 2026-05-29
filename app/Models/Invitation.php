@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 class Invitation extends Model
 {
     protected $fillable = [
-        'email', 'name', 'token', 'expires_at', 'used_at', 'created_by',
+        'email', 'name', 'type', 'token', 'expires_at', 'used_at', 'created_by',
     ];
 
     protected $casts = [
@@ -25,15 +25,21 @@ class Invitation extends Model
 
     // ── Helpers ───────────────────────────────────────────────────
 
-    public static function generate(string $email, ?string $name, int $createdBy): self
+    public static function generate(string $email, ?string $name, int $createdBy, string $type = 'handler'): self
     {
         return self::create([
             'email'      => $email,
             'name'       => $name,
+            'type'       => $type,
             'token'      => Str::random(48),
             'expires_at' => now()->addDays(14),
             'created_by' => $createdBy,
         ]);
+    }
+
+    public function isInstructor(): bool
+    {
+        return $this->type === 'instructor';
     }
 
     public function isValid(): bool

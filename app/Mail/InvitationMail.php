@@ -17,6 +17,7 @@ class InvitationMail extends Mailable
     public string $signUpUrl;
     public string $schoolName;
     public ?string $recipientName;
+    public bool $isInstructor;
 
     public function __construct(public Invitation $invitation)
     {
@@ -24,12 +25,15 @@ class InvitationMail extends Mailable
         $this->schoolName    = $branch->branch_name ?: 'McKaynine Dog School';
         $this->recipientName = $invitation->name;
         $this->signUpUrl     = url(route('invitation.register', ['token' => $invitation->token], false));
+        $this->isInstructor  = $invitation->isInstructor();
     }
 
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'You\'re invited to join ' . $this->schoolName,
+            subject: $this->isInstructor
+                ? 'Your instructor account — ' . $this->schoolName
+                : 'You\'re invited to join ' . $this->schoolName,
         );
     }
 

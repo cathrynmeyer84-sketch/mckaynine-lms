@@ -176,7 +176,10 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::post('/results/{examResult}/release', [Admin\ResultController::class, 'release'])->name('results.release');
 
     // Instructors
-    Route::resource('instructors', Admin\InstructorController::class)->except(['destroy']);
+    Route::resource('instructors', Admin\InstructorController::class)->only(['index', 'show', 'edit', 'update']);
+    Route::post('/instructors/invite', [Admin\InstructorController::class, 'invite'])->name('instructors.invite');
+    Route::post('/instructors/invitations/{invitation}/resend', [Admin\InstructorController::class, 'resendInvite'])->name('instructors.invitations.resend');
+    Route::delete('/instructors/invitations/{invitation}', [Admin\InstructorController::class, 'cancelInvite'])->name('instructors.invitations.cancel');
 
     // Private lessons
     Route::get('/private-lessons', [Admin\PrivateLessonController::class, 'index'])->name('private-lessons.index');
@@ -418,5 +421,6 @@ Route::get('/vet-clearance-form.pdf', function () {
 use App\Http\Controllers\InvitationRegisterController;
 Route::get('/invite/{token}', [InvitationRegisterController::class, 'show'])->name('invitation.register');
 Route::post('/invite/{token}', [InvitationRegisterController::class, 'store'])->name('invitation.register.store');
+Route::post('/invite/{token}/instructor', [InvitationRegisterController::class, 'storeInstructor'])->name('invitation.instructor.store');
 
 require __DIR__.'/auth.php';
