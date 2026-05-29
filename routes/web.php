@@ -250,6 +250,11 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
         Route::put('/calendar/school-years/{schoolYear}', [Admin\CalendarController::class, 'updateSchoolYear'])->name('calendar.school-years.update');
         Route::delete('/calendar/school-years/{schoolYear}', [Admin\CalendarController::class, 'destroySchoolYear'])->name('calendar.school-years.destroy');
 
+        // Document library
+        Route::get('/documents', [Admin\DocumentLibraryController::class, 'index'])->name('documents.index');
+        Route::post('/documents', [Admin\DocumentLibraryController::class, 'store'])->name('documents.store');
+        Route::delete('/documents/{document}', [Admin\DocumentLibraryController::class, 'destroy'])->name('documents.destroy');
+
     }); // end super_admin
 
 });
